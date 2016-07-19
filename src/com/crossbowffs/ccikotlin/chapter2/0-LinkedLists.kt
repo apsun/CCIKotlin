@@ -1,6 +1,6 @@
 package com.crossbowffs.ccikotlin.chapter2
 
-data class LinkedNode<T>(var data: T) {
+class LinkedNode<T>(var data: T) {
     var next: LinkedNode<T>? = null
 }
 

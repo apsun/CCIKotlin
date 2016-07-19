@@ -57,8 +57,8 @@ fun main(args: Array<String>) {
         enqueue(Dog("Coco"))
         doAssert(dequeueAny()!!.name == "Chocola")
         doAssert(dequeueDog()!!.name == "Coco")
-        doAssert(dequeueCat()!!.name == "Vanilla")
         doAssert(dequeueDog() == null)
+        doAssert(dequeueCat()!!.name == "Vanilla")
         doAssert(dequeueAny() == null)
     }
 }

@@ -10,35 +10,33 @@ import java.util.*
  */
 class MultiStack<T>(val sizeLimit: Int) {
     private val stacks = arrayListOf(ArrayDeque<T>())
-    private var currIndex = 0
 
     fun push(value: T) {
-        if (stacks[currIndex].size == sizeLimit) {
+        if (stacks.last().size == sizeLimit) {
             stacks.add(ArrayDeque())
-            currIndex++
         }
-        stacks[currIndex].push(value)
+        stacks.last().push(value)
     }
 
     fun peek(): T? {
-        return peekAt(currIndex)
+        return peekAt(stacks.lastIndex)
     }
 
     fun peekAt(index: Int): T? {
-        if (index > currIndex) return null
+        if (index >= stacks.size) return null
         return stacks[index].peek()
     }
 
     fun pop(): T? {
-        return popAt(currIndex)
+        return popAt(stacks.lastIndex)
     }
 
     fun popAt(index: Int): T? {
-        if (index > currIndex) return null
+        if (index >= stacks.size) return null
         if (stacks[index].isEmpty()) return null
         val top = stacks[index].pop()
-        while (currIndex != 0 && stacks[currIndex].isEmpty()) {
-            stacks.removeAt(currIndex--)
+        while (stacks.size > 1 && stacks.last().isEmpty()) {
+            stacks.removeAt(stacks.lastIndex)
         }
         return top
     }
@@ -69,5 +67,18 @@ fun main(args: Array<String>) {
         push(7)
         push(8)
         doAssert(popAt(1) == 8)
+    }
+    MultiStack<Int>(2).apply {
+        push(1)
+        push(2)
+        push(3)
+        doAssert(popAt(0) == 2)
+        doAssert(popAt(0) == 1)
+        doAssert(popAt(0) == null)
+        doAssert(pop() == 3)
+        doAssert(pop() == null)
+        push(1)
+        doAssert(popAt(1) == null)
+        doAssert(pop() == 1)
     }
 }
